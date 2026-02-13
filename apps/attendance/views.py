@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
 from django.db.models import Q
+from django.http import HttpResponse
 from datetime import datetime, timedelta
 from .models import AttendanceRecord, DailyAttendance, LeaveRequest
 from .serializers import (
@@ -51,6 +52,56 @@ class AttendanceRecordViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=False, methods=['get'])
+    def download_attlog(self, request):
+        """
+        Download attendance log in x_attlog.dat format (ZKTeco format)
+        Query params: start_date, end_date, device_id
+        """
+        if not request.user.is_admin:
+            return Response(
+                {'error': 'Only admins can download attendance logs.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        
+        # Get query parameters
+        start_date = request.query_params.get('start_date')
+        end_date = request.query_params.get('end_date')
+        device_id = request.query_params.get('device_id')
+        
+        queryset = self.get_queryset()
+        
+        # Apply filters
+        if start_date:
+            queryset = queryset.filter(timestamp__gte=start_date)
+        if end_date:
+            queryset = queryset.filter(timestamp__lte=end_date)
+        if device_id:
+            queryset = queryset.filter(device_id=device_id)
+        
+        # Generate .dat file content
+        # Format: PIN\tDateTime\tStatus\tVerifyType\tWorkCode
+        lines = []
+        for record in queryset:
+            pin = record.user.employee_id or record.user.username
+            datetime_str = record.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+            status_code = record.verify_code
+            verify_type = record.verify_type
+            work_code = record.work_code or '0'
+            
+            line = f"{pin}\t{datetime_str}\t{status_code}\t{verify_type}\t{work_code}"
+            lines.append(line)
+        
+        # Create response
+        content = '\n'.join(lines)
+        response = HttpResponse(content, content_type='text/plain')
+        
+        # Set filename
+        filename = f"x_attlog_{timezone.now().strftime('%Y%m%d_%H%M%S')}.dat"
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        
+        return response
 
 
 class DailyAttendanceViewSet(viewsets.ModelViewSet):
