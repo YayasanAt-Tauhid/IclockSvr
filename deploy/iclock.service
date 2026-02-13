@@ -1,0 +1,28 @@
+[Unit]
+Description=iClock Server - Attendance Management System
+After=network.target postgresql.service
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/iclock_server
+Environment="PATH=/opt/iclock_server/venv/bin"
+Environment="DJANGO_SETTINGS_MODULE=iclock_server.settings"
+ExecStart=/opt/iclock_server/venv/bin/gunicorn \
+    --workers 4 \
+    --bind unix:/run/iclock/iclock.sock \
+    --timeout 60 \
+    --access-logfile /var/log/iclock/access.log \
+    --error-logfile /var/log/iclock/error.log \
+    iclock_server.wsgi:application
+
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

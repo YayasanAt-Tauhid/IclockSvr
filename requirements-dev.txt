@@ -1,0 +1,8 @@
+# Development Requirements (Minimal untuk testing lokal)
+Django==3.2.23
+djangorestframework==3.14.0
+django-cors-headers==4.0.0
+django-filter==23.0
+python-decouple==3.8
+Pillow==10.0.0
+pytz==2023.3

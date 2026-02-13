@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iClock Server - Demo Standalone</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #4F46E5;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --gray-50: #F9FAFB;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--gray-50);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #6B7280;
+            font-size: 1.1rem;
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #EFF6FF;
+            border-color: #3B82F6;
+            color: #1E40AF;
+        }
+
+        .alert-warning {
+            background: #FEF3C7;
+            border-color: var(--warning);
+            color: #92400E;
+        }
+
+        .steps {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .step {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .step h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .step code {
+            background: #1F2937;
+            color: #10B981;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            display: block;
+            margin: 0.5rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #4338CA;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--gray-50);
+            color: #6B7280;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🕐 iClock Server - Linux Edition</h1>
+            <p>Sistem Manajemen Kehadiran dengan Admin Login</p>
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>⚠️ Perhatian:</strong> Untuk menjalankan aplikasi lengkap, diperlukan <strong>Python 3.8+</strong>.
+            Sistem Anda memiliki Python 2.7. Silakan install Python 3 terlebih dahulu.
+        </div>
+
+        <div class="alert alert-info">
+            <strong>ℹ️ Info:</strong> Ini adalah halaman demo standalone untuk preview fitur.
+            Untuk instalasi lengkap, ikuti langkah-langkah di bawah.
+        </div>
+
+        <h2 style="margin: 2rem 0 1rem; color: var(--gray-900);">📦 Cara Install Python 3</h2>
+
+        <div class="steps">
+            <div class="step">
+                <h3>Langkah 1: Download Python</h3>
+                <p>Download Python 3.11 dari website resmi:</p>
+                <code>https://www.python.org/downloads/windows/</code>
+                <p style="margin-top: 0.5rem;">Atau klik tombol di bawah:</p>
+                <a href="https://www.python.org/ftp/python/3.11.7/python-3.11.7-amd64.exe" class="btn">
+                    Download Python 3.11.7
+                </a>
+            </div>
+
+            <div class="step">
+                <h3>Langkah 2: Install Python</h3>
+                <p>Jalankan installer yang sudah didownload:</p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>✅ <strong>Centang "Add Python to PATH"</strong></li>
+                    <li>Klik "Install Now"</li>
+                    <li>Tunggu hingga selesai</li>
+                    <li>Restart Command Prompt</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3>Langkah 3: Verifikasi Instalasi</h3>
+                <p>Buka Command Prompt dan cek versi Python:</p>
+                <code>python --version</code>
+                <p style="margin-top: 0.5rem;">Harus menampilkan: <strong>Python 3.11.x</strong></p>
+            </div>
+
+            <div class="step">
+                <h3>Langkah 4: Jalankan Setup</h3>
+                <p>Masuk ke folder aplikasi dan jalankan setup:</p>
+                <code>cd C:\iclockSvr\linux_version</code>
+                <code>setup-windows.bat</code>
+            </div>
+
+            <div class="step">
+                <h3>Langkah 5: Buat Admin User</h3>
+                <p>Ikuti prompt untuk membuat superuser:</p>
+                <code>python manage.py createsuperuser</code>
+                <p style="margin-top: 0.5rem;">Masukkan username, email, dan password</p>
+            </div>
+
+            <div class="step">
+                <h3>Langkah 6: Jalankan Server</h3>
+                <p>Start development server:</p>
+                <code>python manage.py runserver</code>
+                <p style="margin-top: 0.5rem;">Buka browser: <strong>http://127.0.0.1:8000</strong></p>
+            </div>
+        </div>
+
+        <h2 style="margin: 3rem 0 1rem; color: var(--gray-900);">✨ Fitur Aplikasi</h2>
+
+        <div class="features">
+            <div class="feature">
+                <h4>👥 User Management</h4>
+                <p>Kelola user dengan role: Admin, Manager, dan User. CRUD lengkap dengan permissions.</p>
+            </div>
+
+            <div class="feature">
+                <h4>📱 Device Management</h4>
+                <p>Registrasi dan monitoring device attendance. Real-time status tracking.</p>
+            </div>
+
+            <div class="feature">
+                <h4>📊 Attendance Tracking</h4>
+                <p>Record kehadiran otomatis, daily summary, work hours calculation.</p>
+            </div>
+
+            <div class="feature">
+                <h4>📝 Leave Management</h4>
+                <p>Pengajuan cuti dengan workflow approval. Multiple leave types.</p>
+            </div>
+
+            <div class="feature">
+                <h4>🔐 Authentication</h4>
+                <p>Token-based authentication dengan role-based access control.</p>
+            </div>
+
+            <div class="feature">
+                <h4>📡 REST API</h4>
+                <p>Complete REST API untuk integrasi dengan sistem lain.</p>
+            </div>
+        </div>
+
+        <h2 style="margin: 3rem 0 1rem; color: var(--gray-900);">📚 Dokumentasi</h2>
+
+        <div style="display: grid; gap: 1rem;">
+            <a href="README.md" class="btn">📖 README - Overview & Installation</a>
+            <a href="SETUP_WINDOWS.md" class="btn">💻 Windows Setup Guide</a>
+            <a href="DEPLOYMENT.md" class="btn">🚀 Deployment Guide (Linux)</a>
+            <a href="QUICKSTART_ID.md" class="btn">⚡ Quick Start (Bahasa Indonesia)</a>
+            <a href="API_DOCUMENTATION.md" class="btn">📡 API Documentation</a>
+        </div>
+
+        <div class="footer">
+            <p><strong>iClock Server - Linux Edition v1.0</strong></p>
+            <p>Attendance Management System with Admin Login</p>
+            <p style="margin-top: 1rem;">Built with Django 3.2 + REST Framework + Modern Web Technologies</p>
+        </div>
+    </div>
+</body>
+
+</html>
